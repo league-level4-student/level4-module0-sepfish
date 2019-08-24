@@ -22,10 +22,12 @@ public class MazeMaker{
 		maze = new Maze(width, height);
 		
 		//4. select a random cell to start
-		
+		int x = randGen.nextInt(width);
+		int y = randGen.nextInt(height);
+		Cell victim = maze.getCell(x, y);
 		
 		//5. call selectNextPath method with the randomly selected cell
-		
+		selectNextPath(victim);
 		
 		return maze;
 	}
@@ -33,7 +35,7 @@ public class MazeMaker{
 	//6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
 		//A. mark cell as visited
-
+		currentCell.hasBeenVisited();
 		//B. Get an ArrayList of unvisited neighbors using the current cell and the method below
 		
 		//C. if has unvisited neighbors,
@@ -73,7 +75,49 @@ public class MazeMaker{
 	//8. Complete the getUnvisitedNeighbors method
 	//   Any unvisited neighbor of the passed in cell gets added
 	//   to the ArrayList
-	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {
-		return null;
+	
+	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) { 
+		if (c.getX() != 0 && c.getY() != 0) {
+			if (cells[x - 1][y - 1].isAlive) { // 1
+				neighbors++;
+			}
+		}
+		if (c.getX() != 0) {
+			if (cells[x - 1][y].isAlive) { // 4
+				neighbors++;
+			}
+			if (y < cells.length-1) {
+				if (cells[x - 1][y + 1].isAlive) { // 6
+					neighbors++;
+				}
+			}
+		}
+		if (y != 0) {
+			if (cells[x][y - 1].isAlive) { // 2
+				neighbors++;
+			}
+			if (x < cells.length-1) {
+				if (cells[x + 1][y - 1].isAlive) { // 3
+					neighbors++;
+				}
+			}
+		}
+		if (y < cells.length-1) {
+			if (cells[x][y + 1].isAlive) { // 7
+				neighbors++;
+			}
+		}
+		if (x < cells.length-1) {
+			if (cells[x + 1][y].isAlive) { // 5
+				neighbors++;
+			}
+			if (y < cells.length-1) {
+				if (cells[x + 1][y + 1].isAlive) { // 8
+					neighbors++;
+				}
+			}
+		}
+
+		return neighbors;
 	}
 }
