@@ -32,6 +32,8 @@ public class MazeMaker{
 		return maze;
 	}
 
+	//problems here?? find out where the maze isn't working
+	
 	//6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
 		//A. mark cell as visited
@@ -50,8 +52,6 @@ public class MazeMaker{
 			//C4. make the new cell the current cell and mark it as visited
 			currentCell = unvisitedNeighbors.get(r);
 			currentCell.hasBeenVisited();
-			//unvisitedNeighbors.get(r).hasBeenVisited();
-			//unvisitedNeighbors.remove(r);
 			//C5. call the selectNextPath method with the current cell
 			selectNextPath(currentCell);
 			}
