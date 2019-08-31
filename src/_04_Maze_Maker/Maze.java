@@ -5,7 +5,7 @@ import java.awt.Graphics;
 public class Maze {
 	//1. Create a 2D array of cells. Don't initialize it.
 	
-	Cell[][] cells;
+	static Cell[][] cells;
 	
 	private int width;
 	private int height;
@@ -29,8 +29,7 @@ public class Maze {
 	public void draw(Graphics g) {
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
-				g.setColor(new Color(200, 60, 200));
-				g.drawRect(i * cells.length * 20 + 140, j * cells.length * 20 + 140, width * 20, height * 20);
+				cells[i][j].draw(g);
 			}
 		}
 	}
