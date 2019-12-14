@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import javax.swing.JPanel;
@@ -43,26 +46,22 @@ public class GridPanel extends JPanel implements Serializable {
 		pixels = new Pixel[rows][cols];
 		
 		//3. Iterate through the array and initialize each element to a new pixel.
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("src/_02_Pixel_Art/save_file.txt"));
-			
-			String line = br.readLine();
-			while(line != null){
-				System.out.println(line);
-				line = br.readLine();
-			}
-			
-			br.close();
-		} catch (FileNotFoundException e1) {
+		try (FileInputStream fis = new FileInputStream(new File("src/_02_Pixel_Art/save_file.txt")); ObjectInputStream ois = new ObjectInputStream(fis)) {
+			pixels = ((GridPanel) ois.readObject()).pixels;
+		} catch (IOException e) {
 			for (int i = 0; i < pixels.length; i++) {
 				for (int j = 0; j < pixels[i].length; j++) {
 					pixels[i][j] = new Pixel(i,j);
 				}
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			for (int i = 0; i < pixels.length; i++) {
+				for (int j = 0; j < pixels[i].length; j++) {
+					pixels[i][j] = new Pixel(i,j);
+				}
+			}
 		}
+		
 	}
 	
 	public void setColor(Color c) {
