@@ -3,10 +3,15 @@ package _02_Pixel_Art;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Serializable;
 
 import javax.swing.JPanel;
 
-public class GridPanel extends JPanel{
+public class GridPanel extends JPanel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int windowWidth;
@@ -32,18 +37,32 @@ public class GridPanel extends JPanel{
 		
 		color = Color.BLACK;
 		
-		setPreferredSize(new Dimension(windowWidth, windowHeight));
+		setPreferredSize(new Dimension(windowWidth + 100, windowHeight + 100));
 		
 		//2. Initialize the pixel array using the rows and cols variables.
 		pixels = new Pixel[rows][cols];
 		
 		//3. Iterate through the array and initialize each element to a new pixel.
-		for (int i = 0; i < pixels.length; i++) {
-			for (int j = 0; j < pixels[i].length; j++) {
-				pixels[i][j] = new Pixel(i,j);
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src/_02_Pixel_Art/save_file.txt"));
+			
+			String line = br.readLine();
+			while(line != null){
+				System.out.println(line);
+				line = br.readLine();
 			}
+			
+			br.close();
+		} catch (FileNotFoundException e1) {
+			for (int i = 0; i < pixels.length; i++) {
+				for (int j = 0; j < pixels[i].length; j++) {
+					pixels[i][j] = new Pixel(i,j);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 	}
 	
 	public void setColor(Color c) {
@@ -70,4 +89,6 @@ public class GridPanel extends JPanel{
 			}
 		}
 	}
+	
+	
 }
